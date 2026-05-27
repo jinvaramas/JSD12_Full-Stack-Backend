@@ -17,8 +17,9 @@ const corsOptions = {
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:5175",
-  ], // frontend domain
-  credentials: true, // ✅ allow cookies to be sent
+    process.env.FRONTEND_URL,
+  ].filter(Boolean),
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -76,7 +77,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = 3002;
+const PORT = process.env.PORT || 3002;
 
 await connectDB();
 await connectSupabase();
