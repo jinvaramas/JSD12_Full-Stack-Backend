@@ -172,6 +172,8 @@ export const askUsers = async (req, res, next) => {
         },
       },
     ]);
+
+    console.log(sources);
     // the ? is a defensive technique to avoid runtime errors if any source is missing or malformed
     const contextLines = sources.map((s, idx) => {
       const id = s?._id ? String(s._id) : "";

@@ -1,13 +1,16 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import helmet from "helmet";
 
 import { users } from "./fakeData/fakeUsers.js";
 import { router as apiRoutes } from "./routes/index.js";
 import { connectDB } from "./config/mongodb.js";
 import { connectSupabase } from "./config/supabase.js";
+import { limiter } from "./middlewares/rateLimiter.js";
 
 const app = express();
+app.user(helmet());
 
 const corsOptions = {
   origin: [
@@ -19,7 +22,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
+app.use(limiter);
 app.use(express.json());
 app.use(cookieParser());
 
@@ -57,6 +60,8 @@ app.get("/", (req, res) => {
     </body>
   </html>`);
 });
+
+// Centealized eror 404
 
 // Centralized error handling middleware
 app.use((err, req, res, next) => {
