@@ -10,7 +10,7 @@ import { connectSupabase } from "./config/supabase.js";
 import { limiter } from "./middlewares/rateLimiter.js";
 
 const app = express();
-app.user(helmet());
+app.use(helmet());
 
 const corsOptions = {
   origin: [
